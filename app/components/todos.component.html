@@ -1,0 +1,34 @@
+<div class="add-todo-form text-center">
+    <h1>Add A Todo</h1>
+    <div class="form-group">
+        <input class="form-control input-lg" placeholder="Add Todo..." autofocus #todotext>
+        <br>
+        <button (click)="addTodo($event, todotext)" class="btn btn-primary btn-block">Create</button>
+    </div>
+</div>
+
+<div class="todo-list">
+    <div class="alert alert-info text-center" [hidden]="todos.length > 0">
+        <h3>No Todos</h3>
+    </div>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr *ngFor="let todo of todos; let i = index">
+                <th>{{i + 1}}</th>
+                <td><input type="checkbox" [checked]="todoIsCompleted" (click)="updateStatus(todo)"></td>
+                <td>
+                    <span [class.hidden]="todo.isEditMode">{{todo.text}}</span>
+            <input [class.hidden]="!todo.isEditMode" type="text" [value]="todo.text" (keypress)="updateTodoText($event, todo)">
+            <input [class.hidden]="!todo.isEditMode" type="button" value="Cancel" (click)="setEditState(todo, false)" class="btn btn-warning">   
+                </td>
+                <td>
+                    <div class="btns">
+                        <input type="button" class="btn btn-danger pull-right" (click)="deleteTodo(todo)" value="Delete"> 
+            <input type="button" [class.disabled]="todo.isCompleted" (click)="setEditState(todo, true)" class="btn btn-default pull-right" value="Edit">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
